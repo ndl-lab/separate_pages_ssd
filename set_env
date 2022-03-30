@@ -1,0 +1,14 @@
+if [ ! -e venv ]; then
+    virtualenv -p python3.6.9 venv
+fi
+. venv/bin/activate
+
+pip install scikit-image==0.16.2
+pip install scipy==1.1.0
+pip install Pillow==7.0.0
+pip install tensorflow==1.14.0
+pip install Keras==2.0.8
+pip install opencv-python==4.2.0.32
+
+# OR 
+# pip install -r requirements.txt
