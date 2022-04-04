@@ -23,7 +23,14 @@ wget https://lab.ndl.go.jp/dataset/ndlocr/separate_pages_ssd/weights.hdf5 -P ./s
 # 使い方
 ## 推論
 
-inference_inputディレクトリ(`-i` オプションで変更可能)にのど元を分割したい画像を入れ、`inference_divided.py`を実行する。inference_outputディレクトリ(-o オプションで変更可能)に分割後の画像が出力する。分割後の画像ファイル名は元画像ファイル名+`LEFT` or `RIGHT`(デフォルトでは `_01` と `_02`)となる。入力画像にノド元が検出されなかった場合、画像は分割されずに、元画像ファイル名+`SINGLE`(デフォルトでは `_00`)で出力する。
+inference_inputディレクトリ(`-i` オプションで変更可能)にノド元を分割したい画像を配置し、
+`inference_divided.py`を実行する。
+
+inference_outputディレクトリ(-o オプションで変更可能)に分割後の画像が出力される。
+
+分割後の画像ファイル名は元画像ファイル名+`LEFT` or `RIGHT`(デフォルトでは `_01` と `_02`)となる。
+
+入力画像にノド元が検出されなかった場合、画像は分割されずに、元画像ファイル名+`SINGLE`(デフォルトでは `_00`)で出力する。
 
 ```
 $ python3 inference_divided.py [-i INPUT] [-o OUTPUT] [-l LEFT] [-r RIGHT] [-s SINGLE] [-e EXT] [-q QUALITY]
@@ -48,7 +55,7 @@ optional arguments:
                 例）input image:  input.jpg, RIGHT: _02(default)
                     output image: input_02.jpg
   -s SINGLE, --single SINGLE
-                入力画像でノド元が検出されなかった場合に出力する画像ファイル名の末尾に着けるフッター
+                入力画像でノド元が検出されなかった場合に出力する画像ファイル名の末尾につけるフッター
                 例）input image:  input.jpg, SINGLE: _00(default)
                     output image: input_00.jpg
   -e EXT, --ext EXT     
@@ -71,7 +78,7 @@ optional arguments:
 
 ### 1. 学習ファイルの準備
 学習させたい画像ファイルをtraining/imgに、
-のど位置情報をtraining/image.tsvにそれぞれ用意しておく。
+ノド元位置の情報をtraining/image.tsvにそれぞれ準備する。
 
 ※例では　(ファイル名)\t(中心からのずれの割合)
 としていますが、tsvの形式に応じてtraining/make_pkl_for_page.pyをカスタマイズしてください。
