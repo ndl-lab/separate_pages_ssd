@@ -65,9 +65,9 @@ optional arguments:
                 指定したtsvファイルが既に存在しているときは、入力ファイル名とノド元位置を追記する。
 ```
 
-# 追加の学習手順
+## 追加の学習手順
 
-## 1. 学習ファイルの準備
+### 1. 学習ファイルの準備
 学習させたい画像ファイルをtraining/imgに、
 のど位置情報をtraining/image.tsvにそれぞれ用意しておく。
 
@@ -80,7 +80,7 @@ training/size_convertion.py
 
 を実行し、画像のサイズを300*300に変換しておく
 
-## 2. pklの生成
+### 2. pklの生成
 
 ```
 training/smake_pkl_for_page.py
@@ -89,7 +89,7 @@ training/smake_pkl_for_page.py
 を実行し、page_layout.pklを生成しておく。
 
 
-## 3. 学習
+### 3. 学習
 
 ```
 training/train.py
