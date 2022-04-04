@@ -1,6 +1,6 @@
 # NDLOCR用ページ分割モジュール
 
-本リポジトリには、見開きのページをのど元で分割するための学習プログラムと推論プログラムが含まれています。
+見開きのページをのど元で分割するためのモジュールのリポジトリです。
 
 本プログラムは、国立国会図書館が株式会社モルフォAIソリューションズに委託して作成したものです。
 
@@ -9,7 +9,7 @@
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
 
-# 環境及びモデルダウンロード
+# 環境構築及びモデルダウンロード
 python3.7環境を想定
 
 separate_pages_ssdディレクトリ直下で以下のコマンドを実行する
