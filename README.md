@@ -2,21 +2,24 @@
 
 本リポジトリには、見開きのページをのど元で分割するための学習プログラムと推論プログラムが含まれています。
 
-本プログラムは国立国会図書館次世代システム開発研究室（NDLラボ）からの委託により、株式会社モルフォAIソリューションズと株式会社モルフォが開発を行いました。
+本プログラムは、国立国会図書館が株式会社モルフォAIソリューションズに委託して作成したものです。
 
-本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成された以下のリポジトリをさらに改変して作成しています。
+本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成されたNDLラボが提供する次のリポジトリの、inference_divided.pyに対して必要な改変を加えたものです。
 
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
 
-# Setup
-```
-. set_env
-```
-を実行する。もしくは requirements.txt のパッケージをインストールする。
+# 環境設定
+python3.7環境で
 
-# Usage
-## Inference
+```
+pip install -r requirements.txt 
+```
+
+を実行する。
+
+# 使い方
+## 推論
 
 inference_inputディレクトリ(`-i` オプションで変更可能)にのど元を分割したい画像を入れ、`inference_divided.py`を実行する。inference_outputディレクトリ(-o オプションで変更可能)に分割後の画像が出力する。分割後の画像ファイル名は元画像ファイル名+`LEFT` or `RIGHT`(デフォルトでは `_01` と `_02`)となる。入力画像にノド元が検出されなかった場合、画像は分割されずに、元画像ファイル名+`SINGLE`(デフォルトでは `_00`)で出力する。
 
@@ -62,24 +65,35 @@ optional arguments:
                 指定したtsvファイルが既に存在しているときは、入力ファイル名とノド元位置を追記する。
 ```
 
-# Training
+# 追加の学習手順
 
-1.学習ファイルの準備
+## 1. 学習ファイルの準備
 学習させたい画像ファイルをtraining/imgに、
 のど位置情報をtraining/image.tsvにそれぞれ用意しておく。
 
 ※例では　(ファイル名)\t(中心からのずれの割合)
 としていますが、tsvの形式に応じてtraining/make_pkl_for_page.pyをカスタマイズしてください。
 
+```
 training/size_convertion.py
+```
+
+を実行し、画像のサイズを300*300に変換しておく
+
+## 2. pklの生成
+
+```
+training/smake_pkl_for_page.py
+```
+
+を実行し、page_layout.pklを生成しておく。
 
 
-で画像のサイズを300*300に変換しておく
+## 3. 学習
 
-2.pklの生成
-make_pkl_for_page.pyを実行し、page_layout.pklを生成しておく。
+```
+training/train.py
+```
 
-
-3.学習
-train.pyを実行し、学習を開始する。
+を実行し、学習を開始する。
 checkpointsディレクトリに学習済weightsファイルが生成される。
