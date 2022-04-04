@@ -98,4 +98,4 @@ training/train.py
 ```
 
 を実行し、学習を開始する。
-checkpointsディレクトリに学習済weightsファイルが生成される。
+checkpointsディレクトリに学習済weightsファイルが生成されるので、ssd_tools以下のweights.hdf5を差し替える。
