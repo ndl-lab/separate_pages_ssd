@@ -1,18 +1,21 @@
-# Overview
+# NDLOCR用ページ分割モジュール
 
 本リポジトリには、見開きのページをのど元で分割するための学習プログラムと推論プログラムが含まれています。
-本プログラムは国立国会図書館次世代システム開発研究室（NDLラボ）からの委託により、株式会社モルフォAIソリューションズと株式会社モルフォが開発を行いました。本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成された以下のリポジトリをさらに改変して作成しています。
+本プログラムは国立国会図書館次世代システム開発研究室（NDLラボ）からの委託により、株式会社モルフォAIソリューションズと株式会社モルフォが開発を行いました。
+
+本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成された以下のリポジトリをさらに改変して作成しています。
 
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
 
-# setup
+# Setup
 ```
 . set_env
 ```
 を実行する。もしくは requirements.txt のパッケージをインストールする。
 
-# inference
+# Usage
+## Inference
 
 inference_inputディレクトリ(`-i` オプションで変更可能)にのど元を分割したい画像を入れ、`inference_divided.py`を実行する。inference_outputディレクトリ(-o オプションで変更可能)に分割後の画像が出力する。分割後の画像ファイル名は元画像ファイル名+`LEFT` or `RIGHT`(デフォルトでは `_01` と `_02`)となる。入力画像にノド元が検出されなかった場合、画像は分割されずに、元画像ファイル名+`SINGLE`(デフォルトでは `_00`)で出力する。
 
@@ -63,9 +66,9 @@ optional arguments:
 1.学習ファイルの準備
 学習させたい画像ファイルをtraining/imgに、
 のど位置情報をtraining/image.tsvにそれぞれ用意しておく。
-※例では
-(ファイル名)\t(中心からのずれの割合)
-としましたが、tsvの形式に応じてtraining/make_pkl_for_page.pyをカスタマイズしてください。
+
+※例では　(ファイル名)\t(中心からのずれの割合)
+としていますが、tsvの形式に応じてtraining/make_pkl_for_page.pyをカスタマイズしてください。
 
 training/size_convertion.py
 
