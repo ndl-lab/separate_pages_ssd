@@ -4,7 +4,7 @@
 
 本プログラムは、国立国会図書館が株式会社モルフォAIソリューションズに委託して作成したものです。
 
-本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成されたNDLラボが提供する次のリポジトリの、inference_divided.pyに対して必要な改変を加えたものです。
+本プログラムは、[rykov8's repo](https://github.com/rykov8/ssd_keras)を改変して作成されたNDLラボが提供するプログラムの次に挙げる変更箇所に対して必要な改変を加えたものです。
 
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
