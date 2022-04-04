@@ -9,14 +9,16 @@
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
 
-# 環境設定
-python3.7環境で
+# 環境及びモデルダウンロード
+python3.7環境を想定
+
+separate_pages_ssdディレクトリ直下で以下のコマンドを実行する
 
 ```
 pip install -r requirements.txt 
+wget https://lab.ndl.go.jp/dataset/ndlocr/separate_pages_ssd/weights.hdf5 -P ./ssd_tools
 ```
 
-を実行する。
 
 # 使い方
 ## 推論
