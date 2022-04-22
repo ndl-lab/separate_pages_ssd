@@ -9,6 +9,10 @@
 [ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)
 - 変更箇所: `inference_divided.py` ([ndl-lab/ssd_keras](https://github.com/ndl-lab/ssd_keras)でのファイル名は `inference_devided.py`)
 
+本プログラムは、国立国会図書館がCC BY 4.0ライセンスで公開するものです。詳細については
+[LICENSE](./LICENSE
+)をご覧ください。
+
 # 環境構築及びモデルダウンロード
 python3.7環境を想定
 
