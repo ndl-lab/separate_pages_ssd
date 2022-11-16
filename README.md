@@ -71,7 +71,7 @@ optional arguments:
                 default: 100
   --short SHORT 出力画像の短辺の長さ。アスペクト比は維持したままリサイズする。
                 指定しなかった場合オリジナルサイズで出力される。
-  --lg LOG, --log LOG
+  -lg LOG, --log LOG
                 検出したノド元位置を記録するtsvファイルのパス。未指定の場合、出力しない。
                 1行目に列名 image_name<tab>trimming_x
                 2行目以降に入力画像のファイル名と検出したノド元位置を記録する。
