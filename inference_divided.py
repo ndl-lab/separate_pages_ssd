@@ -111,7 +111,7 @@ def divide_facing_page(input, input_path=None, output="NO_DUMP",
         preds = model.predict(inputs, batch_size=1, verbose=1)
         results = bbox_util.detection_out(preds)
         # results[i][b, p] ... i: image index; b: bbox index; p: [label, confidence, xmin, ymin, xmax, ymax]
-        cnt += batch_size
+        
         for i, cvimg in enumerate(images):
             if len(results[i]) == 0:
                 top_conf = 0.0
@@ -123,7 +123,7 @@ def divide_facing_page(input, input_path=None, output="NO_DUMP",
 
             div_x = 0
             basename, ext_ori = os.path.splitext(
-                os.path.basename(filenames[i]))
+                os.path.basename(filenames[i + cnt]))
             if ext == "SAME":
                 ext = ext_ori
 
@@ -192,6 +192,8 @@ def divide_facing_page(input, input_path=None, output="NO_DUMP",
                         im.save(os.path.join(output+'_rect', basename+ext),
                                 dpi=(dpiinfo["width_dpi"], dpiinfo["height_dpi"]),
                                 quality=quality)
+
+        cnt += batch_size
 
         del inputs, images
         gc.collect()
