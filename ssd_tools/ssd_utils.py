@@ -2,7 +2,7 @@
 
 import numpy as np
 import tensorflow as tf
-
+tf.compat.v1.disable_eager_execution()
 
 class BBoxUtility(object):
     """Utility class to do some stuff with bounding boxes and priors.
@@ -27,12 +27,12 @@ class BBoxUtility(object):
         self.overlap_threshold = overlap_threshold
         self._nms_thresh = nms_thresh
         self._top_k = top_k
-        self.boxes = tf.placeholder(dtype='float32', shape=(None, 4))
-        self.scores = tf.placeholder(dtype='float32', shape=(None,))
+        self.boxes = tf.compat.v1.placeholder(dtype='float32', shape=(None, 4))
+        self.scores = tf.compat.v1.placeholder(dtype='float32', shape=(None,))
         self.nms = tf.image.non_max_suppression(self.boxes, self.scores,
                                                 self._top_k,
                                                 iou_threshold=self._nms_thresh)
-        self.sess = tf.Session(config=tf.ConfigProto(device_count={'GPU': 0}))
+        self.sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(device_count={'GPU': 0}))
 
     @property
     def nms_thresh(self):

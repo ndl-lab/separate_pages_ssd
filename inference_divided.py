@@ -6,7 +6,8 @@ import cv2
 import argparse
 import os
 from keras.applications.imagenet_utils import preprocess_input
-from keras.preprocessing import image
+#from keras.preprocessing import image
+import keras.utils as image
 import numpy as np
 import gc
 import glob

@@ -2,14 +2,16 @@
 
 import keras.backend as K
 from keras.layers import Activation
-from keras.layers import AtrousConv2D
-from keras.layers.convolutional import Conv2D
+#from keras.layers import AtrousConv2D
+#from keras.layers.convolutional import Conv2D
+from keras.layers import Conv2D
 from keras.layers import Dense
 from keras.layers import Flatten
 from keras.layers import GlobalAveragePooling2D
 from keras.layers import Input
 from keras.layers import MaxPooling2D
-from keras.layers import Concatenate
+#from keras.layers import Concatenate
+from keras.layers import concatenate
 from keras.layers import Reshape
 from keras.layers import ZeroPadding2D
 from keras.models import Model
@@ -33,7 +35,8 @@ def SSD300(input_shape, num_classes=21):
     """
     net = {}
     # Block 1
-    input_tensor = input_tensor = Input(shape=input_shape)
+    #input_tensor = input_tensor = Input(shape=input_shape)
+    input_tensor = Input(shape=input_shape)
     img_size = (input_shape[1], input_shape[0])
     net['input'] = input_tensor
     net['conv1_1'] = Conv2D(64,(3, 3),
@@ -247,10 +250,7 @@ def SSD300(input_shape, num_classes=21):
     priorbox = PriorBox(img_size, 276.0, max_size=330.0, aspect_ratios=[2, 3],
                         variances=[0.1, 0.1, 0.2, 0.2],
                         name='pool6_mbox_priorbox')
-    if K.image_dim_ordering() == 'tf':
-        target_shape = (1, 1, 256)
-    else:
-        target_shape = (256, 1, 1)
+    target_shape = (1, 1, 256)
     net['pool6_reshaped'] = Reshape(target_shape,
                                     name='pool6_reshaped')(net['pool6'])
     net['pool6_mbox_priorbox'] = priorbox(net['pool6_reshaped'])
@@ -263,14 +263,14 @@ def SSD300(input_shape, num_classes=21):
                              net['pool6_mbox_loc_flat']],
                             mode='concat', concat_axis=1, name='mbox_loc')"""
 
-    net['mbox_loc'] = Concatenate(axis=1,name='mbox_loc')([
+    net['mbox_loc'] = concatenate([
                             net['conv4_3_norm_mbox_loc_flat'],
                              net['fc7_mbox_loc_flat'],
                              net['conv6_2_mbox_loc_flat'],
                              net['conv7_2_mbox_loc_flat'],
                              net['conv8_2_mbox_loc_flat'],
                              net['pool6_mbox_loc_flat']
-                             ])
+                             ],axis=1,name='mbox_loc')
 
     """net['mbox_conf'] = merge([net['conv4_3_norm_mbox_conf_flat'],
                               net['fc7_mbox_conf_flat'],
@@ -280,14 +280,14 @@ def SSD300(input_shape, num_classes=21):
                               net['pool6_mbox_conf_flat']],
                              mode='concat', concat_axis=1, name='mbox_conf')"""
 
-    net['mbox_conf'] = Concatenate(axis=1,name='mbox_conf')([
+    net['mbox_conf'] = concatenate([
                             net['conv4_3_norm_mbox_conf_flat'],
                               net['fc7_mbox_conf_flat'],
                               net['conv6_2_mbox_conf_flat'],
                               net['conv7_2_mbox_conf_flat'],
                               net['conv8_2_mbox_conf_flat'],
                               net['pool6_mbox_conf_flat']
-                             ])
+                             ],axis=1,name='mbox_conf')
 
     """net['mbox_priorbox'] = merge([net['conv4_3_norm_mbox_priorbox'],
                                   net['fc7_mbox_priorbox'],
@@ -298,18 +298,18 @@ def SSD300(input_shape, num_classes=21):
                                  mode='concat', concat_axis=1,
                                  name='mbox_priorbox')"""
 
-    net['mbox_priorbox'] =  Concatenate(axis=1,name='mbox_priorbox')([
+    net['mbox_priorbox'] =  concatenate([
                                 net['conv4_3_norm_mbox_priorbox'],
                                   net['fc7_mbox_priorbox'],
                                   net['conv6_2_mbox_priorbox'],
                                   net['conv7_2_mbox_priorbox'],
                                   net['conv8_2_mbox_priorbox'],
                                   net['pool6_mbox_priorbox']
-                                  ])
-    if hasattr(net['mbox_loc'], '_keras_shape'):
-        num_boxes = net['mbox_loc']._keras_shape[-1] // 4
-    elif hasattr(net['mbox_loc'], 'int_shape'):
-        num_boxes = K.int_shape(net['mbox_loc'])[-1] // 4
+                                  ],axis=1,name='mbox_priorbox')
+    #if hasattr(net['mbox_loc'], '_keras_shape'):
+    #num_boxes = net['mbox_loc']._keras_shape[-1] // 4
+    #elif hasattr(net['mbox_loc'], 'int_shape'):
+    num_boxes = K.int_shape(net['mbox_loc'])[-1] // 4
     net['mbox_loc'] = Reshape((num_boxes, 4),
                               name='mbox_loc_final')(net['mbox_loc'])
     net['mbox_conf'] = Reshape((num_boxes, num_classes),
@@ -322,10 +322,10 @@ def SSD300(input_shape, num_classes=21):
                                mode='concat', concat_axis=2,
                                name='predictions')"""
 
-    net['predictions'] = Concatenate(axis=2,name='predictions')([
+    net['predictions'] = concatenate([
                             net['mbox_loc'],
                                net['mbox_conf'],
                                net['mbox_priorbox']
-                               ])
+                               ],axis=2,name='predictions')
     model = Model(net['input'], net['predictions'])
     return model
